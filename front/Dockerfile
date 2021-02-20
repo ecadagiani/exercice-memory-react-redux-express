@@ -1,19 +1,12 @@
-FROM node:10.10.0-slim
+FROM node:14.15 as build
+WORKDIR /usr/src/app
+COPY package.json yarn.lock ./
+RUN yarn
+COPY . ./
+RUN yarn build
 
-WORKDIR /tmp
-COPY package.json /tmp/
-RUN  npm install
 
-WORKDIR /home/node/app
-RUN mv /tmp/node_modules /home/node/app/node_modules
-COPY . /home/node/app
-
-ENV FRONT_PORT 3000
-EXPOSE $FRONT_PORT
-
-RUN useradd --user-group --create-home --shell /bin/false app
-RUN chown -R app:app /home/node/app/*
-RUN chown -R app:app /home/node/app
-USER app
-
-CMD npm run startDev
+FROM nginx:1.12-alpine
+COPY --from=build /usr/src/app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

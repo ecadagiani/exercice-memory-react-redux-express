@@ -4,7 +4,8 @@
   "description": "Un site web, jeu de memory pour apprendre les égalités en JS",
   "scripts": {
     "start": "docker-compose up",
-    "localInstall": "npm i && cd server && npm i && cd ../front && npm i"
+    "start:local": "docker-compose up -d && cd front && npm run start",
+    "install:local": "npm i && cd server && npm i && cd ../front && npm i"
   },
   "engines": {
     "node": ">=8.10.0"
