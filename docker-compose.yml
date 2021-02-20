@@ -1,0 +1,43 @@
+version: "3.2"
+services:
+  db:
+    image: mysql:8.0.23
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./db/data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    env_file:
+      - .env
+    networks:
+      db_network:
+        aliases:
+          - db_host
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8888:8080"
+    networks:
+      - db_network
+
+  server:
+    build: ./server
+    volumes:
+      - ./server:/home/node/app
+      - server_node_volumes:/home/node/app/node_modules
+    env_file:
+      - .env
+    ports:
+      - "5000:5000"
+    networks:
+      - db_network
+
+
+volumes:
+  db_data:
+  server_node_volumes:
+
+networks:
+  db_network:

@@ -1,0 +1,25 @@
+{
+  "name": "pyrite-oclock-memory",
+  "version": "1.0.0",
+  "description": "Un site web, jeu de memory pour apprendre les égalités en JS",
+  "scripts": {
+    "start": "docker-compose up"
+  },
+  "engines": {
+    "node": ">=8.10.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecadagiani/Pyrite-oclock-memory.git"
+  },
+  "author": "Eden Cadagiani <e.cadagiani@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ecadagiani/Pyrite-oclock-memory/issues"
+  },
+  "devDependencies": {
+    "eslint": "^7.20.0",
+    "eslint-plugin-node": "^11.1.0"
+  },
+  "homepage": "https://github.com/ecadagiani/Pyrite-oclock-memory#readme"
+}
