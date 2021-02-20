@@ -18,6 +18,6 @@ webpackDevServer.addDevServerEntrypoints( config, options );
 const compiler = webpack( config );
 const server   = new webpackDevServer( compiler, options );
 
-server.listen( 5000, "localhost", () => {
-    console.log( "dev server listening on port 5000" );
+server.listen( process.env.FRONT_PORT, "localhost", () => {
+    console.log( `Pyrite front listening on port ${process.env.FRONT_PORT}` );
 } );

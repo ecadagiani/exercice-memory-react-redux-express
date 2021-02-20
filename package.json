@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Un site web, jeu de memory pour apprendre les égalités en JS",
   "scripts": {
-    "start": "docker-compose up"
+    "start": "docker-compose up",
+    "localInstall": "npm i && cd server && npm i && cd ../front && npm i"
   },
   "engines": {
     "node": ">=8.10.0"

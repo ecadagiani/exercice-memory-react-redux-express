@@ -42,6 +42,7 @@
         "no-multiple-empty-lines": "off",
         "consistent-return": "off",
         "global-require": "off",
-        "no-param-reassign": "off"
+        "no-param-reassign": "off",
+        "node/no-unpublished-require": "off"
     }
 }

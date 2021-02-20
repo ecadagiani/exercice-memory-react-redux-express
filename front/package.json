@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "dev": "node ./dev.js"
+        "startDev": "node ./dev.js"
     },
     "author": "Eden Cadagiani <e.cadagiani@gmail.com>",
     "license": "MIT",

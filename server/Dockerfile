@@ -17,7 +17,7 @@ ENV SERVER_DB_PASSWORD ''
 ENV SERVER_PORT 5000
 ENV ENVIRONMENT 'development'
 
-EXPOSE $PORT
+EXPOSE $SERVER_PORT
 
 RUN useradd --user-group --create-home --shell /bin/false app
 RUN chown -R app:app /home/node/app/*
