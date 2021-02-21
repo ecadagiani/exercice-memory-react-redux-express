@@ -1,0 +1,15 @@
+/*!
+ * Created in février 2021
+ * Written by Eden Cadagiani <e.cadagiani@gmail.com>
+ */
+.BoardGame__view{
+
+
+    .BoardGame__cardContainer{
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        align-content: space-between;
+    }
+}

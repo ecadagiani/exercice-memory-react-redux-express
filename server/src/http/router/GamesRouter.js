@@ -24,7 +24,7 @@ gamesRouter.get(
         if ( !game ) {
             return res.status( 404 ).send( "game not found" ).end();
         }
-        
+
         res.json( { result: game.toObject() } );
     },
 );

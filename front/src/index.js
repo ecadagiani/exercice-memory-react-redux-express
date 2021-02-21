@@ -1,8 +1,15 @@
+/*
+ * Created in février 2021
+ * Written by Eden Cadagiani <e.cadagiani@gmail.com>
+ */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+
+import App             from 'containers/App';
+import reportWebVitals from 'reportWebVitals';
+import "assets/style/index.scss"
+
 
 ReactDOM.render(
   <React.StrictMode>

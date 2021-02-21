@@ -1,0 +1,43 @@
+/*!
+ * Created in février 2021
+ * Written by Eden Cadagiani <e.cadagiani@gmail.com>
+ */
+
+.Card{
+    // Taille (pour la construction de la grille)
+    width: 10vw;
+    height: 10vw;
+
+    // Style
+    border-radius: 5px;
+    background-color: #fff;
+    margin: 15px;
+
+    // Centrage de l'image
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    // SHADOW
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    &:hover:not(.found) {
+        box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    }
+    &.returned {
+        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    }
+    &.found {
+        box-shadow: none;
+    }
+
+    /******* IMAGE *******/
+    .Card__versoImage{
+        width: 8vw;
+    }
+    .Card__rectoImage{
+        width: 8vw;
+    }
+}
+
+
