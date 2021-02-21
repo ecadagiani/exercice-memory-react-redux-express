@@ -8,7 +8,7 @@ const cors       = require( "cors" );
 const helmet     = require( "helmet" );
 const http       = require( "http" );
 
-const gamesRouter = require( "./router/GamesRouter" );
+const gamesRouter = require( "http/router/GamesRouter" );
 
 class HttpController {
     constructor() {

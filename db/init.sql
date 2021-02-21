@@ -13,8 +13,11 @@ DROP TABLE IF EXISTS `games`;
 CREATE TABLE `games` (
   `gm_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `gm_created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `gm_updated_at` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `gm_updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `gm_score` smallint(4) DEFAULT NULL,
+  `gm_board` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gm_board_width` smallint(4) DEFAULT NULL,
+  `gm_board_height` smallint(4) DEFAULT NULL,
   `gm_usr_id` int(11) unsigned NOT NULL,
   `gm_gs_code` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
 
@@ -25,13 +28,13 @@ CREATE TABLE `games` (
   CONSTRAINT `games_ibfk_2` FOREIGN KEY (`gm_gs_code`) REFERENCES `game_states` (`gs_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `usr_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `usr_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
 
-  PRIMARY KEY (`usr_id`)
+  PRIMARY KEY (`usr_id`),
+  UNIQUE KEY `usr_name` (`usr_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `game_states`;

@@ -5,7 +5,7 @@
 
 const Joi = require( "joi" );
 
-const idJoiSchema = Joi.string().regex( /^[0-9a-fA-F]{24}$/, "valid id" );
+const idJoiSchema = Joi.string().regex( /^[0-9]{1,11}$/, "valid id" );
 
 
 module.exports = {

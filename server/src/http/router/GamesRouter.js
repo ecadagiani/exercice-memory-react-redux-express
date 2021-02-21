@@ -7,7 +7,9 @@ const express   = require( "express" );
 const Joi       = require( "joi" );
 const validator = require( "express-joi-validation" ).createValidator( {} );
 
-const { idJoiSchema } = require( "../JoiSchema" );
+const { idJoiSchema } = require( "constants/joiSchema" );
+const Game            = require( "game/Game" );
+const User            = require( "game/User" );
 
 const gamesRouter = express.Router();
 
@@ -17,8 +19,42 @@ gamesRouter.get(
         id: idJoiSchema.required(),
     } ) ),
     async ( req, res ) => {
-        // get game
-        res.json( { result: {} } );
+        const { id } = req.params;
+        const game   = await Game.getGameWithId( id );
+        if ( !game ) {
+            return res.status( 404 ).send( "game not found" ).end();
+        }
+        
+        res.json( { result: game.toObject() } );
+    },
+);
+
+gamesRouter.post(
+    "/start",
+    validator.body( Joi.object( {
+        userId:   idJoiSchema,
+        userName: Joi.string(),
+        width:    Joi.number(),
+        height:   Joi.number(),
+    } ) ),
+    async ( req, res ) => {
+        const { userId, userName, width, height } = req.body;
+        const user                                = new User( { id: userId, name: userName } );
+        if ( !userId )
+            await user.saveToDb();
+
+        const game = new Game( {
+            userId: user.id,
+            width, height,
+        } );
+        game.init();
+        await game.saveToDb();
+        res.json( {
+            result: {
+                user: user.toObject(),
+                game: game.toObject(),
+            },
+        } );
     },
 );
 

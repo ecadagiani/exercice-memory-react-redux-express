@@ -62,7 +62,7 @@ class MysqlConnection {
         this._dbConn.end();
     }
 
-    async query( sql, value, closeConn = true ) {
+    async query( sql, value, closeConn = false ) {
         await this.connect();
         return new Promise( ( resolve, reject ) => {
             const handler = ( error, results ) => {

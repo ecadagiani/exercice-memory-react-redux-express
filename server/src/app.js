@@ -4,7 +4,6 @@
  */
 
 const HttpController = require( "./http/HttpController" );
-const MysqlConnection = require( "./database/MysqlConnection" );
 
 const server = new HttpController();
 server.init();

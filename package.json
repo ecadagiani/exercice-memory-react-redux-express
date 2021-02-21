@@ -5,6 +5,7 @@
   "scripts": {
     "start": "docker-compose up",
     "start:local": "docker-compose up -d && cd front && npm run start",
+    "startServer:local": "docker-compose up -d && docker-compose logs -f",
     "install:local": "npm i && cd server && npm i && cd ../front && npm i"
   },
   "engines": {
