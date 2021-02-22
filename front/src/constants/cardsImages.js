@@ -18,6 +18,7 @@ import pointVirgule       from "assets/images/pointVirgule.svg";
 import pourcent           from "assets/images/pourcent.svg";
 import tilde              from "assets/images/tilde.svg";
 import tiret              from "assets/images/tiret.svg";
+import arobase              from "assets/images/arobase.svg";
 
 
 export const cardsImages = {
@@ -36,4 +37,5 @@ export const cardsImages = {
     pourcent,
     tilde,
     tiret,
+    arobase,
 };

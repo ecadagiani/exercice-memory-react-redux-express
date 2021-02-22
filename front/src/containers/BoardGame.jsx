@@ -10,7 +10,6 @@ import { filter, findIndex }                         from "lodash";
 import { startGameRequest } from "requests/gameRequests";
 import { REQUEST_STATUS }   from "constants/constants";
 import { parseBoard }       from "functions/gameFunctions";
-import Card                 from "components/Card/Card";
 import CardContainer        from "components/CardContainer/CardContainer";
 
 
@@ -109,6 +108,15 @@ function reducer( state, action ) {
 const BoardGame = ( {} ) => {
     const [state, dispatch] = useReducer( reducer, initialState );
 
+    useEffect( () => {
+        dispatch( { type: "startGame/REQUEST" } );
+        startGameRequest().then( res => {
+            dispatch( { type: "startGame/SUCCESS", payload: res.data.result } );
+        } ).catch( err => {
+            dispatch( { type: "startGame/ERROR" } );
+            // todo display message on error
+        } );
+    }, [] );
 
     const onCardClick = useCallback( ( index, card ) => {
         if ( card.isFind ) // si elle est déjà find, inutile de la retourner ( on economise un render)
@@ -126,17 +134,6 @@ const BoardGame = ( {} ) => {
 
         dispatch( { type: "clickOnImage", payload: { index } } );
     }, [state.board] );
-
-    useEffect( () => {
-        dispatch( { type: "startGame/REQUEST" } );
-        startGameRequest().then( res => {
-            dispatch( { type: "startGame/SUCCESS", payload: res.data.result } );
-        } ).catch( err => {
-            dispatch( { type: "startGame/FAILED" } );
-            // todo display message on error
-        } );
-    }, [] );
-
 
     return (
         <div className={"BoardGame__view"}>

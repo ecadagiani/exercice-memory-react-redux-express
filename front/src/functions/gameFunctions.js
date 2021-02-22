@@ -7,7 +7,7 @@ export function parseBoard(board){
         appId: uniqId(),
         identity: cell.identity,
         text: cell.text,
-        isReturn: false,
+        isReturn: true,
         isFind: false,
     }))
 }

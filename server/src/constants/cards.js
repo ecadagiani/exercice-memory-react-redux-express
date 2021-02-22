@@ -92,12 +92,12 @@ const cards = [
     },
 
     {
-        identity: "batman",
-        text: "Array(10).join(\"foo\"-1) + \" Batman!\"",
+        identity: "arobase",
+        text: "Array(4).join(\"foo\"-1)",
     },
     {
-        identity: "batman",
-        text: "20",
+        identity: "arobase",
+        text: "NaNNaNNaNNaNNaN",
     },
 
     {

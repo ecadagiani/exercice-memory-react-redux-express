@@ -22,7 +22,7 @@ class Board {
             this._height = height;
 
             // si le board est donné dans les paramètres on le set. Sinon on créer un board de la taille indiqué (mais vide)
-            this._cardsList = cardsList || fill( Array( height ), Array( width ) );
+            this._cardsList = cardsList || fill( Array( height ), 0 ).map( () => new Array( width ) );
         }
     }
 
@@ -46,15 +46,15 @@ class Board {
         // on parcours le tableau de carte, créé dans le constructeur, mais pour le moment vide
         for ( let i = 0; i < this._cardsList.length; i++ ) {
             for ( let j = 0; j < this._cardsList[i].length; j++ ) {
-                if ( withoutReplacementCards.length === 0 ) // si le tableau de carte est vide on stoppe la boucle
+                if ( withoutReplacementCards.length === 0 ) { // si le tableau de carte est vide on stoppe la boucle
                     break;
+                }
                 // on sélectionne un item aléatoire du tableau withoutReplacementCards
-                const randomIndex     = random( 0, withoutReplacementCards.length - 1 ); // donne en entier aleatoire entre 0 et (withoutReplacementCards.length - 1)
+                const randomIndex     = random( 0, withoutReplacementCards.length - 1 ); // donne en entier aléatoire entre 0 et (withoutReplacementCards.length - 1)
                 this._cardsList[i][j] = withoutReplacementCards[randomIndex]; // on ajoute cet element aléatoire dans notre board
                 withoutReplacementCards.splice( randomIndex, 1 ); // on supprime cet element pour ne pas avoir à le piocher de nouveau
             }
         }
-
     }
 
     // le board sera stocké sur la bdd sous forme de string, la methode toString est utilisé au moment de le serialisé

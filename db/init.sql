@@ -15,6 +15,7 @@ CREATE TABLE `games` (
   `gm_created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `gm_updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `gm_score` smallint(4) DEFAULT NULL,
+  `gm_time` smallint(4) DEFAULT NULL COMMENT 'en seconde',
   `gm_board` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `gm_board_width` smallint(4) DEFAULT NULL,
   `gm_board_height` smallint(4) DEFAULT NULL,
