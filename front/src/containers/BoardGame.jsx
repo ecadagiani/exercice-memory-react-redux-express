@@ -5,12 +5,13 @@
 
 import React, { useEffect, useReducer, useCallback } from "react";
 import { filter, findIndex }                         from "lodash";
-import PropTypes                                     from "prop-types";
+
 
 import { startGameRequest } from "requests/gameRequests";
 import { REQUEST_STATUS }   from "constants/constants";
 import { parseBoard }       from "functions/gameFunctions";
 import Card                 from "components/Card/Card";
+import CardContainer        from "components/CardContainer/CardContainer";
 
 
 const initialState = {
@@ -27,13 +28,16 @@ const initialState = {
 };
 
 function reducer( state, action ) {
+    console.log( action.type, action.payload );
     switch ( action.type ) {
-        case "startGame/REQUEST":
+        case "startGame/REQUEST": {
             return {
                 ...state,
                 fetchStatus: REQUEST_STATUS.FETCHING,
             };
-        case "startGame/SUCCESS":
+        }
+
+        case "startGame/SUCCESS": {
             return {
                 ...state,
                 fetchStatus: REQUEST_STATUS.FETCHED,
@@ -43,32 +47,37 @@ function reducer( state, action ) {
                 width:       action.payload.game.width,
                 height:      action.payload.game.height,
             };
-        case "startGame/ERROR":
+        }
+
+        case "startGame/ERROR": {
             return {
                 ...state,
                 fetchStatus: REQUEST_STATUS.FAILED,
             };
-        case "returnImage":
+        }
+
+        case "clickOnImage": {
             // si il y a deja 2 cartes de retourné on empêche le joueur de toucher à une autre carte
             if ( filter( state.board, { isReturn: true } ).length >= 2 ) {
                 return state;
             }
 
             // on copie state.board pour éviter les effets de bords
-            const newBoard = [...state.board];
-            newBoard[action.payload.index] = {...newBoard[action.payload.index]};
+            const newBoard                 = [...state.board];
+            newBoard[action.payload.index] = { ...newBoard[action.payload.index] };
 
             // si il y a deja un element de retourner, si l'on viens de retourner une carte face ouverte,
             // et que les deux cartes sont de la meme identity. Alors on viens de trouver une paire, c'est validé
             const firstReturnedIndex = findIndex( state.board, { isReturn: true } );
             if (
-                newBoard[firstReturnedIndex] >= 0
+                firstReturnedIndex >= 0
                 && !newBoard[action.payload.index].isReturn
                 && newBoard[firstReturnedIndex].identity === newBoard[action.payload.index].identity
             ) {
-                newBoard[firstReturnedIndex] = {...newBoard[firstReturnedIndex]};
+                newBoard[firstReturnedIndex]            = { ...newBoard[firstReturnedIndex] };
                 newBoard[action.payload.index].isReturn = newBoard[firstReturnedIndex].isReturn = false;
                 newBoard[action.payload.index].isFind   = newBoard[firstReturnedIndex].isFind = true;
+                console.log( "lol" );
             } else {
                 newBoard[action.payload.index].isReturn = !newBoard[action.payload.index].isReturn;
             }
@@ -77,6 +86,21 @@ function reducer( state, action ) {
                 ...state,
                 board: newBoard,
             };
+        }
+
+        case "returnTimeout": {
+            const { itemsIndex } = action.payload;
+            const newBoard       = [...state.board];
+            itemsIndex.forEach( index => {
+                newBoard[index]          = { ...newBoard[index] };
+                newBoard[index].isReturn = false;
+            } );
+            return {
+                ...state,
+                board: newBoard,
+            };
+        }
+
         default:
             throw new Error( `action ${action.type} not implemented` );
     }
@@ -86,10 +110,22 @@ const BoardGame = ( {} ) => {
     const [state, dispatch] = useReducer( reducer, initialState );
 
 
-    const onCardClick = useCallback( ( appId, index ) => {
-        dispatch( { type: "returnImage", payload: { index } } );
-        // todo set timeout to return down when two card is returned
-    }, [] );
+    const onCardClick = useCallback( ( index, card ) => {
+        if ( card.isFind ) // si elle est déjà find, inutile de la retourner ( on economise un render)
+            return;
+
+        if ( !card.isReturn ) { // si la carte est caché et qu'elle va etre retourné face visible
+            const firstReturnedIndex = findIndex( state.board, { isReturn: true } );
+            if ( firstReturnedIndex >= 0 ) { // si il y a deja une carte face visible
+                // on déclenche une action dans 1,5 sec pour retourner automatiquement ces cartes
+                setTimeout( () => {
+                    dispatch( { type: "returnTimeout", payload: { itemsIndex: [firstReturnedIndex, index] } } );
+                }, 1000 );
+            }
+        }
+
+        dispatch( { type: "clickOnImage", payload: { index } } );
+    }, [state.board] );
 
     useEffect( () => {
         dispatch( { type: "startGame/REQUEST" } );
@@ -101,28 +137,27 @@ const BoardGame = ( {} ) => {
         } );
     }, [] );
 
-    
+
     return (
         <div className={"BoardGame__view"}>
-            <div className={"BoardGame__cardContainer"}>
-                {state.fetchStatus === REQUEST_STATUS.FETCHING && (
-                    <span>Loading</span>
-                )}
-                {state.fetchStatus === REQUEST_STATUS.FAILED && (
-                    <span>ERROR</span>
-                )}
-                {state.fetchStatus === REQUEST_STATUS.FETCHED &&
-                state.board.map( ( card, index ) => (
-                    <Card
-                        key={card.appId}
-                        text={card.text}
-                        imageName={card.identity}
-                        isReturn={card.isReturn}
-                        onClick={( ...args ) => onCardClick( card.appId, index, ...args )}
-                    />
-                ) )
-                }
-            </div>
+            <h1 className={"BoardGame__title"}>
+                Memory JS
+            </h1>
+            {state.fetchStatus === REQUEST_STATUS.FETCHING && (
+                <span className={"BoardGame__loader"}>Loading</span>
+            )}
+            {state.fetchStatus === REQUEST_STATUS.FAILED && (
+                <span className={"BoardGame__error"}>ERROR</span>
+            )}
+            {state.fetchStatus === REQUEST_STATUS.FETCHED && (
+                <CardContainer
+                    className={"BoardGame__cardContainer"}
+                    height={state.height}
+                    width={state.width}
+                    board={state.board}
+                    onCardClick={onCardClick}
+                />
+            )}
         </div>
     );
 };
