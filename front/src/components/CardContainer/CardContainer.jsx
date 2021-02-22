@@ -19,6 +19,7 @@ const Grid = styled.div`
     grid-gap: 5px;
   }
 `;
+// todo add better grid for responsive
 
 
 const CardContainer = ( {
@@ -31,7 +32,7 @@ const CardContainer = ( {
                     key={card.appId}
                     text={card.text}
                     imageName={card.identity}
-                    isReturn={card.isReturn}
+                    isFlip={card.isFlip}
                     isFind={card.isFind}
                     onClick={() => onCardClick( index, card )}
                 />

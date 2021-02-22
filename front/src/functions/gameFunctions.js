@@ -1,5 +1,5 @@
 
-import {flatten} from "lodash";
+import {flatten, find} from "lodash";
 import uniqId from "uniqid";
 
 export function parseBoard(board){
@@ -7,7 +7,11 @@ export function parseBoard(board){
         appId: uniqId(),
         identity: cell.identity,
         text: cell.text,
-        isReturn: true,
+        isFlip: false,
         isFind: false,
     }))
+}
+
+export function gameIsWin(cards){
+    return !find(cards, {isFind: false});
 }

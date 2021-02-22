@@ -5,7 +5,7 @@
 
 import React, { useEffect } from "react";
 
-import BoardGame from "containers/BoardGame";
+import BoardGame from "containers/BoardGame/BoardGame";
 
 
 function App() {

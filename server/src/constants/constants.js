@@ -11,6 +11,6 @@ const GAME_STATUS = {
 
 const DEFAULT_WIDTH  = 7;
 const DEFAULT_HEIGHT = 4;
-const DEFAULT_TIME = 80; // in second
+const DEFAULT_TIME = 120; // in second
 
 module.exports = { GAME_STATUS, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_TIME };

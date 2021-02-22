@@ -3,8 +3,14 @@
  * Written by Eden Cadagiani <e.cadagiani@gmail.com>
  */
 
+@import '~sweetalert2/src/sweetalert2';
+@import '~@sweetalert2/theme-material-ui/material-ui.min.css';
+
+
+
 @import "_boardGame";
 
 body {
     background-color: #5BD1D7;
+    font-family: 'Roboto', sans-serif;
 }

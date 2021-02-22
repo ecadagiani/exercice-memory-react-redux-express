@@ -24,12 +24,18 @@ class Game {
         this._time   = time;
         this._id     = id;
         this._userId = userId;
-
-        console.log(this._time)
     }
 
     init() {
         this._board.genBoard();
+    }
+
+    fail() {
+        this._status = GAME_STATUS.FAIL;
+    }
+
+    win() {
+        this._status = GAME_STATUS.WIN;
     }
 
     async saveToDb() {
@@ -92,15 +98,15 @@ class Game {
             score:  res[0].gm_score,
             time:   res[0].gm_time,
             board:  new Board( {
-                width:     res[0].gm_width,
-                height:    res[0].gm_height,
+                width:     res[0].gm_board_width,
+                height:    res[0].gm_board_height,
                 cardsList: JSON.parse( res[0].gm_board ),
             } ),
         } );
     }
 
     toObject() {
-        console.log(this._time)
+        console.log( this._time );
         return {
             id:     this._id,
             userId: this._userId,

@@ -14,11 +14,11 @@ import "./Card.scss";
 const Card = ( {
     imageName,
     text,
-    isReturn,
+    isFlip,
     isFind,
     onClick,
 } ) => {
-    const isFlipped = isReturn || isFind;
+    const isFlipped = isFlip || isFind;
 
     return (
         <div

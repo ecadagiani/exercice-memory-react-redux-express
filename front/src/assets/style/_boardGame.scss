@@ -3,9 +3,19 @@
  * Written by Eden Cadagiani <e.cadagiani@gmail.com>
  */
 .BoardGame__view {
+    .BoardGame__header {
+        display: flex;
+        justify-content: space-between;
 
-    .BoardGame__title{
+        .BoardGame__title {
+            font-family: 'Lobster', cursive;
+            margin-top: 20px;
+        }
 
+        .BoardGame__time {
+            text-align: right;
+            margin-top: 20px;
+        }
     }
 
     .BoardGame__cardContainer {

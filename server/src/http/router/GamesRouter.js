@@ -58,4 +58,44 @@ gamesRouter.post(
     },
 );
 
+gamesRouter.post(
+    "/:id/fail",
+    validator.body( Joi.object( {
+        id: idJoiSchema,
+    } ) ),
+    async ( req, res ) => {
+        const { id } = req.params;
+        const game   = await Game.getGameWithId( id );
+        if ( !game ) {
+            return res.status( 404 ).send( "game not found" ).end();
+        }
+        game.fail();
+        await game.saveToDb();
+
+        res.json( {
+            result: game.toObject(),
+        } );
+    },
+);
+
+gamesRouter.post(
+    "/:id/win",
+    validator.body( Joi.object( {
+        id: idJoiSchema,
+    } ) ),
+    async ( req, res ) => {
+        const { id } = req.params;
+        const game   = await Game.getGameWithId( id );
+        if ( !game ) {
+            return res.status( 404 ).send( "game not found" ).end();
+        }
+        game.win();
+        await game.saveToDb();
+
+        res.json( {
+            result: game.toObject(),
+        } );
+    },
+);
+
 module.exports = gamesRouter;
