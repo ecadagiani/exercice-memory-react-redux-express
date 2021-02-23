@@ -6,13 +6,18 @@
 import React, { Component } from "react";
 import { findIndex }        from "lodash";
 import Swal                 from "sweetalert2";
+import withReactContent     from "sweetalert2-react-content";
 
 import { REQUEST_STATUS } from "constants/constants";
 
-import CardContainer from "components/CardContainer/CardContainer";
+import CardList      from "components/CardList/CardList";
 import TimeCounter   from "components/TimeCounter/TimeCounter";
 import { gameIsWin } from "functions/gameFunctions";
+import PropTypes     from "prop-types";
+import JsEquality    from "components/JsEquality/JsEquality";
 
+
+const SwalReact = withReactContent( Swal );
 
 class BoardGameContainer extends Component {
     constructor() {
@@ -61,7 +66,7 @@ class BoardGameContainer extends Component {
     };
 
     resetForm = () => {
-        this.stopCountDown()
+        this.stopCountDown();
         this.setState( {
             countDown:        -1,
             intervalId:       null,
@@ -80,7 +85,7 @@ class BoardGameContainer extends Component {
             text:              "Raté, vous avez perdu, vous ferez mieux la prochaine fois.",
             confirmButtonText: "Réessayer",
             allowOutsideClick: false,
-            allowEscapeKey: false,
+            allowEscapeKey:    false,
         } ).then( ( result ) => {
             if ( result.isConfirmed ) {
                 this.resetForm();
@@ -92,10 +97,13 @@ class BoardGameContainer extends Component {
     onWin = () => {
         this.stopCountDown();
         this.props.setWin( { gameId: this.props.gameId, remainingTime: this.state.countDown } );
-        Swal.fire( {
-            icon:  "success",
-            title: "Gagné",
-            text:  "Vous avez gagné, vous avez su reconnaitre toutes les égalités en JS",
+        SwalReact.fire( {
+            icon:              "success",
+            title:             "Gagné",
+            html:              (<p>
+                Vous avez gagné, vous avez su reconnaitre toutes les égalités en JS:
+                <JsEquality cardsList={this.props.cardsList}/>
+            </p>),
             allowOutsideClick: false,
         } );
     };
@@ -126,12 +134,12 @@ class BoardGameContainer extends Component {
                     <h1 className={"BoardGame__title"}>
                         Memory JS
                     </h1>
-                    <div>
+                    <div className={"BoardGame__titleRight"}>
                         <TimeCounter
                             controlledCountDown={this.state.countDown * 1000}
                             className={"BoardGame__time"}
                         />
-                        <button className={"materialButton BoardGame__buttonReset"} onClick={this.resetForm}>Reset</button>
+                        <button className={"materialButton BoardGame__buttonReset"} onClick={this.resetForm}>Recommencer</button>
                     </div>
                 </header>
                 {fetchStatus === REQUEST_STATUS.FETCHING && (
@@ -141,7 +149,7 @@ class BoardGameContainer extends Component {
                     <span className={"BoardGame__error"}>ERROR</span>
                 )}
                 {fetchStatus === REQUEST_STATUS.FETCHED && (
-                    <CardContainer
+                    <CardList
                         className={"BoardGame__cardContainer"}
                         height={height}
                         width={width}
@@ -154,6 +162,26 @@ class BoardGameContainer extends Component {
     }
 }
 
-BoardGameContainer.propTypes = {};
+BoardGameContainer.propTypes = {
+    cardsList:    PropTypes.arrayOf( PropTypes.shape( {
+        appId:    PropTypes.string,
+        text:     PropTypes.string,
+        identity: PropTypes.string,
+        isReturn: PropTypes.bool,
+        isFind:   PropTypes.bool,
+    } ) ),
+    gameId:       PropTypes.number,
+    time:         PropTypes.number,
+    height:       PropTypes.number,
+    width:        PropTypes.number,
+    fetchStatus:  PropTypes.string,
+    isWin:        PropTypes.bool,
+    isFail:       PropTypes.bool,
+    fetchNewGame: PropTypes.func,
+    clickOnCard:  PropTypes.func,
+    closeCards:   PropTypes.func,
+    setFail:      PropTypes.func,
+    setWin:       PropTypes.func,
+};
 
 export default BoardGameContainer;

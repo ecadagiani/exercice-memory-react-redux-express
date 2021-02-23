@@ -1,0 +1,20 @@
+/*!
+ * Created in février 2021
+ * Written by Eden Cadagiani <e.cadagiani@gmail.com>
+ */
+
+.JsEquality__code{
+    display: block;
+    text-align: left;
+
+    .JsEquality__line{
+        margin-top: 5px;
+        display: block;
+        list-style-type: space-counter;
+
+        &::before{
+            content: "•";
+            padding-right: 0.5em;
+        }
+    }
+}

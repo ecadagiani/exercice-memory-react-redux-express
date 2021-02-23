@@ -7,7 +7,7 @@ import React     from "react";
 import styled    from "@emotion/styled";
 import PropTypes from "prop-types";
 
-import Card      from "components/Card/Card";
+import Card from "components/Card/Card";
 
 
 const Grid = styled.div`
@@ -17,12 +17,14 @@ const Grid = styled.div`
   grid-gap: 30px;
   @media (max-width: 768px) {
     grid-gap: 5px;
+    // en mobile, pour rester responsive, on utilise les lignes en colonnes (seulement si il y a moins de colonne que de ligne)
+    grid-template-rows: repeat(${( { width, height } ) => width > height ? width : height}, 1fr);
+    grid-template-columns: repeat(${( { width, height } ) => width > height ? height : width}, 1fr);
   }
 `;
-// todo add better grid for responsive
 
 
-const CardContainer = ( {
+const CardList = ( {
     height, width, cardsList, onCardClick, ...rest
 } ) => {
     return (
@@ -41,10 +43,10 @@ const CardContainer = ( {
     );
 };
 
-CardContainer.propTypes = {
+CardList.propTypes = {
     height:      PropTypes.number.isRequired,
     width:       PropTypes.number.isRequired,
-    cardsList:       PropTypes.arrayOf( PropTypes.shape( {
+    cardsList:   PropTypes.arrayOf( PropTypes.shape( {
         appId:    PropTypes.string,
         text:     PropTypes.string,
         identity: PropTypes.string,
@@ -54,4 +56,4 @@ CardContainer.propTypes = {
     onCardClick: PropTypes.func.isRequired,
 };
 
-export default CardContainer;
+export default CardList;

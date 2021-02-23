@@ -12,12 +12,18 @@
             margin-top: 20px;
         }
 
+        .BoardGame__titleRight {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
         .BoardGame__time {
-            text-align: right;
+            text-align: left;
             margin-top: 20px;
         }
 
-        .BoardGame__buttonReset{
+        .BoardGame__buttonReset {
             display: block;
         }
     }
