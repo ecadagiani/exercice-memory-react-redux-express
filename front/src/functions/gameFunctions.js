@@ -3,7 +3,7 @@ import {flatten, find} from "lodash";
 import uniqId from "uniqid";
 
 export function parseBoard(board){
-    return flatten(board).map(cell => ({
+    return flatten(board).map((cell, index) => ({
         appId: uniqId(),
         identity: cell.identity,
         text: cell.text,

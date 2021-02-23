@@ -34,8 +34,9 @@ class Game {
         this._status = GAME_STATUS.FAIL;
     }
 
-    win() {
+    win( remainingTime ) {
         this._status = GAME_STATUS.WIN;
+        this._score  = remainingTime;
     }
 
     async saveToDb() {
@@ -106,7 +107,6 @@ class Game {
     }
 
     toObject() {
-        console.log( this._time );
         return {
             id:     this._id,
             userId: this._userId,

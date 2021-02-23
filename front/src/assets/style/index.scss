@@ -6,11 +6,47 @@
 @import '~sweetalert2/src/sweetalert2';
 @import '~@sweetalert2/theme-material-ui/material-ui.min.css';
 
-
-
 @import "_boardGame";
 
 body {
     background-color: #5BD1D7;
     font-family: 'Roboto', sans-serif;
+}
+
+button.materialButton {
+    cursor: pointer;
+    vertical-align: middle;
+    text-decoration: none;
+    text-align: center;
+    letter-spacing: .5px;
+    border: none;
+    border-radius: 2px;
+    display: inline-block;
+    height: 36px;
+    line-height: 36px;
+    padding: 0 16px;
+    text-transform: uppercase;
+    -webkit-tap-highlight-color: transparent;
+    transition: .3s ease-out;
+
+    color: #fff;
+    background-color: #348498;
+
+    -webkit-box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+
+    &:hover {
+        background-color: #3e9cb3;
+        -webkit-box-shadow: 0 3px 3px 0 rgb(0 0 0 / 14%), 0 1px 7px 0 rgb(0 0 0 / 12%), 0 3px 1px -1px rgb(0 0 0 / 20%);
+        box-shadow: 0 3px 3px 0 rgb(0 0 0 / 14%), 0 1px 7px 0 rgb(0 0 0 / 12%), 0 3px 1px -1px rgb(0 0 0 / 20%);
+    }
+
+    &:focus {
+        background-color: #2a6b7a;
+        outline: none;
+    }
+
+    &:active {
+        outline: none;
+    }
 }

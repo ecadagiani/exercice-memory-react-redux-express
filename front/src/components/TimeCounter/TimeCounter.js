@@ -14,29 +14,34 @@ import "./TimeCounter.scss";
 const TimeCounter = ( {
     totalSecond,
     start = false,
+    stop = false,
     onComplete,
     className,
+    controlledCountDown = null,
     ...rest
 } ) => {
     const [countDown, { start: startCountDown }] = useCountDown( totalSecond * 1000, 1000, onComplete );
 
     useEffect( () => {
-        if ( start ) {
+        if ( start && !controlledCountDown ) {
             startCountDown();
         }
-    }, [start, startCountDown] );
+    }, [start, controlledCountDown, startCountDown] );
+
+    const _countDown = controlledCountDown || countDown;
 
     return (
         <span className={cx( className, "TimeCounter" )} {...rest}>
-            {Math.floor( countDown / 1000 / 60 )}min {(countDown / 1000) % 60}s
+            {Math.floor( _countDown / 1000 / 60 ) || 0}min {(_countDown / 1000 % 60) || 0}s
         </span>
     );
 };
 
 TimeCounter.propTypes = {
-    totalSecond: PropTypes.number,
-    start:       PropTypes.bool,
-    onComplete:  PropTypes.func,
+    totalSecond:         PropTypes.number,
+    start:               PropTypes.bool,
+    onComplete:          PropTypes.func,
+    controlledCountDown: PropTypes.number,
 };
 
 export default TimeCounter;

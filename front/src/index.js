@@ -6,7 +6,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import App             from 'containers/App';
+import App             from 'layouts/App';
 import reportWebVitals from 'reportWebVitals';
 import "assets/style/index.scss"
 

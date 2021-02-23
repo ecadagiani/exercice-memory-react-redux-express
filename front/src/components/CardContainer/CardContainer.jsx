@@ -23,18 +23,18 @@ const Grid = styled.div`
 
 
 const CardContainer = ( {
-    height, width, board, onCardClick, ...rest
+    height, width, cardsList, onCardClick, ...rest
 } ) => {
     return (
         <Grid height={height} width={width} {...rest}>
-            {board.map( ( card, index ) => (
+            {cardsList.map( ( card, index ) => (
                 <Card
                     key={card.appId}
                     text={card.text}
                     imageName={card.identity}
                     isFlip={card.isFlip}
                     isFind={card.isFind}
-                    onClick={() => onCardClick( index, card )}
+                    onClick={() => onCardClick( card, index )}
                 />
             ) )}
         </Grid>
@@ -44,7 +44,7 @@ const CardContainer = ( {
 CardContainer.propTypes = {
     height:      PropTypes.number.isRequired,
     width:       PropTypes.number.isRequired,
-    board:       PropTypes.arrayOf( PropTypes.shape( {
+    cardsList:       PropTypes.arrayOf( PropTypes.shape( {
         appId:    PropTypes.string,
         text:     PropTypes.string,
         identity: PropTypes.string,

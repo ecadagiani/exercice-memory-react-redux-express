@@ -15,6 +15,8 @@ export function setGameFailRequest( { gameId } ) {
     return axiosInstance.post( `/game/${gameId}/fail` );
 }
 
-export function setGameWinRequest( { gameId } ) {
-    return axiosInstance.post( `/game/${gameId}/win` );
+export function setGameWinRequest( { gameId, remainingTime } ) {
+    return axiosInstance.post( `/game/${gameId}/win`, {
+        remainingTime
+    } );
 }

@@ -60,8 +60,8 @@ gamesRouter.post(
 
 gamesRouter.post(
     "/:id/fail",
-    validator.body( Joi.object( {
-        id: idJoiSchema,
+    validator.params( Joi.object( {
+        id: idJoiSchema.required(),
     } ) ),
     async ( req, res ) => {
         const { id } = req.params;
@@ -80,16 +80,20 @@ gamesRouter.post(
 
 gamesRouter.post(
     "/:id/win",
+    validator.params( Joi.object( {
+        id: idJoiSchema.required(),
+    } ) ),
     validator.body( Joi.object( {
-        id: idJoiSchema,
+        remainingTime: Joi.number(),
     } ) ),
     async ( req, res ) => {
         const { id } = req.params;
+        const { remainingTime } = req.body;
         const game   = await Game.getGameWithId( id );
         if ( !game ) {
             return res.status( 404 ).send( "game not found" ).end();
         }
-        game.win();
+        game.win(remainingTime);
         await game.saveToDb();
 
         res.json( {
