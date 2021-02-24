@@ -23,17 +23,21 @@ const initialState = {
     },
 
     fetchStatus: REQUEST_STATUS.INITIAL,
+    fetchErrorMessage: "",
     isWin:       false,
     isFail:      false,
 };
 
 export const boardReducer = createReducer( initialState, {
+    // on requête une nouvelle partie, on reset le store a son état d'origine
     [fetchNewGameAsyncAction.pending]:   ( state, action ) => {
         return {
             ...initialState,
             fetchStatus: REQUEST_STATUS.FETCHING,
         };
     },
+
+    // reception des infos de la nouvelle partie
     [fetchNewGameAsyncAction.fulfilled]: ( state, { payload } ) => {
         state.fetchStatus = REQUEST_STATUS.FETCHED;
         state.gameId      = payload.game.id;
@@ -43,9 +47,15 @@ export const boardReducer = createReducer( initialState, {
         state.time        = payload.game.time;
         state.cardsList    = parseBoard( payload.game.board );
     },
+
+    // une erreur est survenue lors de la récupération de la nouvelle partie
     [fetchNewGameAsyncAction.rejected]:  ( state, action ) => {
+        console.log(action)
         state.fetchStatus = REQUEST_STATUS.FAILED;
+        state.fetchErrorMessage = action.error.message;
     },
+
+    // l'utilisateur à cliqué sur une carte
     [clickOnCardAction]: ( state, action ) => {
         // si il y a deja 2 cartes de retourné on empêche le joueur de toucher à une autre carte
         if ( filter( state.cardsList, { isFlip: true } ).length >= 2 ) {
@@ -66,15 +76,21 @@ export const boardReducer = createReducer( initialState, {
             state.cardsList[action.payload.index].isFlip = !state.cardsList[action.payload.index].isFlip;
         }
     },
+
+    // il faut retourner des cartes (notamment après le timeout de 1sec, après l'affichage de 2 cartes)
     [closeCardsAction]: ( state, action ) => {
         const { itemsIndex } = action.payload;
         itemsIndex.forEach( index => {
             state.cardsList[index].isFlip = false;
         } );
     },
+
+    // la partie a été perdu (une requete a été envoyé)
     [setGameFailAsyncAction.pending]: ( state, action ) => {
         state.isFail = true
     },
+
+    //la partie a été gagné (une requete a été envoyé)
     [setGameWinAsyncAction.pending]: ( state, action ) => {
         state.isWin = true
     },

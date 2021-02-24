@@ -24,6 +24,7 @@ const mapStateToProps    = ( state ) => ({
     height:      state.board.height,
     width:       state.board.width,
     fetchStatus: state.board.fetchStatus,
+    fetchErrorMessage: state.board.fetchErrorMessage,
     isWin: state.board.isWin,
     isFail: state.board.isFail,
 });

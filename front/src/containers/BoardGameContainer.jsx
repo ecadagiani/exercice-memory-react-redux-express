@@ -15,6 +15,7 @@ import TimeCounter   from "components/TimeCounter/TimeCounter";
 import { gameIsWin } from "functions/gameFunctions";
 import PropTypes     from "prop-types";
 import JsEquality    from "components/JsEquality/JsEquality";
+import Loader        from "components/Loader/Loader";
 
 
 const SwalReact = withReactContent( Swal );
@@ -31,18 +32,25 @@ class BoardGameContainer extends Component {
     }
 
     componentDidMount() {
+        // démarre une nouvelle game
         this.props.fetchNewGame();
     }
 
 
     componentDidUpdate( prevProps, prevState, snapshot ) {
-        if ( this.state.countDown === -1 && this.props.time > 0 ) {
+        // si le time n'est pas démarré et que la nouvelle game a été récupérer et que le temps max a été set
+        if ( !this.state.countDownStarted && this.props.time > 0 ) {
+            // démarrage du time
             this.startCountDown();
         }
+
+        // si le timer a été démarré et qu'il est arrivé à zero
         if ( this.state.countDownStarted && this.state.countDown === 0 && !this.props.isFail ) {
+            // set la game à perdu
             this.onFail();
         }
 
+        // si toute les cartes ont été retourné
         if (
             this.props.fetchStatus === REQUEST_STATUS.FETCHED
             && !this.props.isWin
@@ -52,6 +60,7 @@ class BoardGameContainer extends Component {
         }
     }
 
+    // démarre le compteur
     startCountDown = () => {
         const intervalId = setInterval( () => {
             this.setState( ( state ) => ({
@@ -61,10 +70,12 @@ class BoardGameContainer extends Component {
         this.setState( { countDown: this.props.time, intervalId, countDownStarted: true } );
     };
 
+    // stop le compteur
     stopCountDown = () => {
         clearInterval( this.state.intervalId );
     };
 
+    // reset tout le composant, re-récupere une game et remet le compteur dans sont état initial
     resetForm = () => {
         this.stopCountDown();
         this.setState( {
@@ -78,6 +89,7 @@ class BoardGameContainer extends Component {
     // quand le compteur est terminé
     onFail = () => {
         this.stopCountDown();
+        // set la game à perdu (émet une requete pour le save sur le server)
         this.props.setFail( { gameId: this.props.gameId } );
         Swal.fire( {
             icon:              "error",
@@ -96,6 +108,7 @@ class BoardGameContainer extends Component {
     // toute les cartes ont été retourné
     onWin = () => {
         this.stopCountDown();
+        // set la game à gagner (émet une requete pour le save sur le server)
         this.props.setWin( { gameId: this.props.gameId, remainingTime: this.state.countDown } );
         SwalReact.fire( {
             icon:              "success",
@@ -115,7 +128,7 @@ class BoardGameContainer extends Component {
         if ( !card.isFlip ) { // si la carte est caché et qu'elle va être retourné face visible
             const firstCardFlippedIndex = findIndex( this.props.cardsList, { isFlip: true } );
             if ( firstCardFlippedIndex >= 0 ) { // si il y a deja une carte face visible
-                // on déclenche une action dans 1,5 sec pour retourner automatiquement ces cartes
+                // on déclenche une action dans 1 sec pour retourner automatiquement ces cartes (si c'est une pair elle resteront retourné)
                 setTimeout( () => {
                     this.props.closeCards( { itemsIndex: [firstCardFlippedIndex, index] } );
                 }, 1000 );
@@ -126,7 +139,7 @@ class BoardGameContainer extends Component {
 
 
     render() {
-        const { fetchStatus, height, width, cardsList } = this.props;
+        const { fetchStatus, height, width, cardsList, fetchErrorMessage } = this.props;
 
         return (
             <div className={"BoardGame__view"}>
@@ -143,10 +156,17 @@ class BoardGameContainer extends Component {
                     </div>
                 </header>
                 {fetchStatus === REQUEST_STATUS.FETCHING && (
-                    <span className={"BoardGame__loader"}>Loading</span>
+                    <div className={"BoardGame__loader"}>
+                        <Loader/>
+                    </div>
                 )}
                 {fetchStatus === REQUEST_STATUS.FAILED && (
-                    <span className={"BoardGame__error"}>ERROR</span>
+                    <div className={"BoardGame__error"}>
+                        <span>
+                            Désolé, une erreur est survenue lors de la création d'une nouvelle partie:
+                            <br/><code>{fetchErrorMessage}</code>
+                        </span>
+                    </div>
                 )}
                 {fetchStatus === REQUEST_STATUS.FETCHED && (
                     <CardList
@@ -163,25 +183,26 @@ class BoardGameContainer extends Component {
 }
 
 BoardGameContainer.propTypes = {
-    cardsList:    PropTypes.arrayOf( PropTypes.shape( {
+    cardsList:         PropTypes.arrayOf( PropTypes.shape( {
         appId:    PropTypes.string,
         text:     PropTypes.string,
         identity: PropTypes.string,
         isReturn: PropTypes.bool,
         isFind:   PropTypes.bool,
     } ) ),
-    gameId:       PropTypes.number,
-    time:         PropTypes.number,
-    height:       PropTypes.number,
-    width:        PropTypes.number,
-    fetchStatus:  PropTypes.string,
-    isWin:        PropTypes.bool,
-    isFail:       PropTypes.bool,
-    fetchNewGame: PropTypes.func,
-    clickOnCard:  PropTypes.func,
-    closeCards:   PropTypes.func,
-    setFail:      PropTypes.func,
-    setWin:       PropTypes.func,
+    gameId:            PropTypes.number,
+    time:              PropTypes.number,
+    height:            PropTypes.number,
+    width:             PropTypes.number,
+    fetchStatus:       PropTypes.string,
+    fetchErrorMessage: PropTypes.string,
+    isWin:             PropTypes.bool,
+    isFail:            PropTypes.bool,
+    fetchNewGame:      PropTypes.func,
+    clickOnCard:       PropTypes.func,
+    closeCards:        PropTypes.func,
+    setFail:           PropTypes.func,
+    setWin:            PropTypes.func,
 };
 
 export default BoardGameContainer;

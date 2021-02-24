@@ -5,6 +5,7 @@
 
 const HttpController = require( "./http/HttpController" );
 
+// Initialisation et démarrage du server
 const server = new HttpController();
 server.init();
 server.startServer();

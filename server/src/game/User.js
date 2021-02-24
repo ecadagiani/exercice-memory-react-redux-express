@@ -7,12 +7,15 @@ const uniqId = require( "uniqid" );
 
 const MysqlConnection = require( "database/MysqlConnection" );
 
+/**
+ * Class permettant la gestion des utilisateur
+ */
 class User {
     constructor( {
         id = null, name = "",
     } ) {
         this._id   = id;
-        this._name = name || uniqId( "user-" );
+        this._name = name || uniqId( "user-" ); // Si name n'est pas préciser, créer un pseudo aléatoire et unique basé sur le timestamp
     }
 
     get id() {
@@ -23,6 +26,10 @@ class User {
         return this._name;
     }
 
+    /**
+     * Retourne la game sous forme d'objet JS, plus simple à transformer en JSON
+     * @return {{name: *, id: null}}
+     */
     toObject() {
         return {
             id:   this._id,
@@ -30,6 +37,11 @@ class User {
         };
     }
 
+    /**
+     * Sauvegarde l'utilisateur en base de donnée, si un id est présente met à jour la partie actuel, sinon créer une nouvelle partie
+     * @async
+     * @return {Promise<boolean>}
+     */
     async saveToDb() {
         const dbConn = new MysqlConnection();
         if ( this._id ) {
@@ -59,6 +71,12 @@ class User {
         }
     }
 
+    /**
+     * Methode static permettant de récupérer un utilisateur de la base de donnée
+     * @async
+     * @param id - id du user
+     * @return {Promise<boolean|User>} - retourne un objet User, si aucun user avec l'id demandé n'existe, retourne false.
+     */
     static async getUserWithId( id ) {
         const dbConn = new MysqlConnection();
         const res    = dbConn.query( `

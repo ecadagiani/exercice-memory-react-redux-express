@@ -6,6 +6,9 @@ const { fill, random } = require( "lodash" );
 
 const { cards } = require( "constants/cards" );
 
+/**
+ * Class permettant la gestion du board: le plateau de jeu contenant les cartes
+ */
 class Board {
     constructor( props ) {
         if ( props instanceof Board ) {
@@ -38,6 +41,9 @@ class Board {
         return this._cardsList;
     }
 
+    /**
+     * Génère aléatoirement un board des dimensions précisé à la construction de l'objet
+     */
     genBoard() {
         // le tableau withoutReplacementCards va nous permettre de faire un tirage aléatoire sans remise.
         // comme il sera modifié, nous devont le copier pour nous assurer que la constante cards restera intact.
@@ -57,7 +63,10 @@ class Board {
         }
     }
 
-    // le board sera stocké sur la bdd sous forme de string, la methode toString est utilisé au moment de le serialisé
+    /**
+     * le board sera stocké sur la bdd sous forme de string, la methode toString est utilisé au moment de le serialisé
+     * @return {string}
+     */
     toString() {
         return JSON.stringify( this._cardsList );
     }

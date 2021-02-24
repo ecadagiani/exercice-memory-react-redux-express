@@ -11,7 +11,6 @@ import BoardGameLayout from "layouts/BoardGameLayout";
 
 
 function App() {
-
     return (
         <div className="App">
             <Provider store={store}>

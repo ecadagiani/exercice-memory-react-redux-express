@@ -14,16 +14,28 @@ const dbConnInfo = {
     //insecureAuth: true
 };
 
-
+/**
+ * Class permettant la gestion de la connexion à la bdd et des query SQL envoyé
+ */
 class MysqlConnection {
     constructor() {
         this._dbConn;
     }
 
+    /**
+     * Retourne la connexion à la bdd
+     * @return {*}
+     */
     get dbConn() {
         return this._dbConn;
     }
 
+    /**
+     * Essaie de ce connecter à la bdd
+     * @async
+     * @return {Promise<Connection>}
+     * @private
+     */
     __connect() {
         return new Promise( ( resolve, reject ) => {
             if ( this._dbConn )
@@ -39,6 +51,11 @@ class MysqlConnection {
         } );
     }
 
+    /**
+     * Essaie de ce connecter à la bdd (tente plusieurs fois à quelques secondes d'intervalle)
+     * @async
+     * @return {Promise<Connection>}
+     */
     async connect() {
         const start = Date.now();
         if ( this._dbConn )
@@ -58,10 +75,21 @@ class MysqlConnection {
         }
     }
 
+    /**
+     * Ferme la connexion à la bdd
+     */
     close() {
         this._dbConn.end();
     }
 
+    /**
+     * Envoie une query à mysql
+     * @async
+     * @param sql {string} - La query à envoyer
+     * @param value {string} - Les éventuelles valeurs à ajouter à la query (a escape)
+     * @param closeConn {boolean=false} - Si il faut fermer la connection après la query
+     * @return {Promise<unknown>} - Retourne les résultats de la query
+     */
     async query( sql, value, closeConn = false ) {
         await this.connect();
         return new Promise( ( resolve, reject ) => {

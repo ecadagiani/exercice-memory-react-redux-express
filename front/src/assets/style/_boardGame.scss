@@ -28,6 +28,16 @@
         }
     }
 
+    .BoardGame__loader{
+        display: flex;
+        justify-content: center;
+    }
+
+    .BoardGame__error{
+        display: flex;
+        justify-content: center;
+    }
+
     .BoardGame__cardContainer {
         margin: 0 auto;
         max-width: 800px;

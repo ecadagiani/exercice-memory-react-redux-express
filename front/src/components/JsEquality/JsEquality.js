@@ -19,12 +19,15 @@ const JsEquality = ( {
         return acc;
     }, {} );
 
-    console.log( pairs, cardsList );
     return (
         <code className={"JsEquality__code"}>
             {Object.values( pairs).map( ( [text1, text2], index ) => (
                 <span key={index} className={"JsEquality__line"}>
-                    <strong>{text1}</strong> === <strong>{text2}</strong>
+                    {text1.length > text2.length ? ( // on met l'égalité le plus long en 1er car cela est plus esthétique, et la plupart du temps l'égalité est plus cohérente
+                        <><strong>{text1}</strong> &lt;=&gt; <strong>{text2}</strong></>
+                    ) : (
+                        <><strong>{text2}</strong> &lt;=&gt; <strong>{text1}</strong></>
+                    )}
                 </span>
             ) )}
         </code>

@@ -13,6 +13,9 @@ const User            = require( "game/User" );
 
 const gamesRouter = express.Router();
 
+
+
+// route pour récupérer une partie
 gamesRouter.get(
     "/:id",
     validator.params( Joi.object( {
@@ -21,6 +24,7 @@ gamesRouter.get(
     async ( req, res ) => {
         const { id } = req.params;
         const game   = await Game.getGameWithId( id );
+        // si la game avec l'id n'existe pas => retourne un 404
         if ( !game ) {
             return res.status( 404 ).send( "game not found" ).end();
         }
@@ -29,6 +33,7 @@ gamesRouter.get(
     },
 );
 
+// route pour démarrer (créer) une nouvelle partie
 gamesRouter.post(
     "/start",
     validator.body( Joi.object( {
@@ -39,9 +44,19 @@ gamesRouter.post(
     } ) ),
     async ( req, res ) => {
         const { userId, userName, width, height } = req.body;
-        const user                                = new User( { id: userId, name: userName } );
-        if ( !userId )
+        let user;
+
+        // si le userId est précisé on essaie de le récupèrer en base
+        if(userId) {
+            // NB: cela ne change pas le userName
+            user = User.getUserWithId( userId );
+        }
+
+        // si le userId n'est pas précisé, où si le userId donné n'existe pas en base, on créer un nouveau utilisateur
+        if ( !userId || !user ) {
+            user = new User( { name: userName } );
             await user.saveToDb();
+        }
 
         const game = new Game( {
             userId: user.id,
@@ -58,6 +73,7 @@ gamesRouter.post(
     },
 );
 
+// pour noter qu'une partie a été perdu
 gamesRouter.post(
     "/:id/fail",
     validator.params( Joi.object( {
@@ -78,13 +94,14 @@ gamesRouter.post(
     },
 );
 
+// pour noter qu'une partie a été gagné et en combien de temps
 gamesRouter.post(
     "/:id/win",
     validator.params( Joi.object( {
         id: idJoiSchema.required(),
     } ) ),
     validator.body( Joi.object( {
-        remainingTime: Joi.number(),
+        remainingTime: Joi.number().required(),
     } ) ),
     async ( req, res ) => {
         const { id } = req.params;

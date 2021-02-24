@@ -7,6 +7,9 @@ const MysqlConnection                                              = require( "d
 const Board                                                        = require( "game/Board" );
 const { GAME_STATUS, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_TIME } = require( "constants/constants" );
 
+/**
+ * Class permettant la gestion, et la creation d'une partie
+ */
 class Game {
     constructor( {
         id = null,
@@ -26,19 +29,36 @@ class Game {
         this._userId = userId;
     }
 
+
+    /**
+     * créer et génère le board
+     */
     init() {
         this._board.genBoard();
     }
 
+    /**
+     * transforme l'état de la partie en perdu
+     */
     fail() {
         this._status = GAME_STATUS.FAIL;
     }
 
+    /**
+     * transforme l'état de la partie en gagné, et inscrit le score
+     * @param remainingTime - temps restant en seconde
+     */
     win( remainingTime ) {
         this._status = GAME_STATUS.WIN;
         this._score  = remainingTime;
     }
 
+
+    /**
+     * Sauvegarde la game en base de donnée, si un id est présente met à jour la partie actuel, sinon créer une nouvelle partie
+     * @async
+     * @return {Promise<boolean>} retourne true
+     */
     async saveToDb() {
         const dbConn = new MysqlConnection();
         if ( this._id ) {
@@ -81,6 +101,12 @@ class Game {
         }
     }
 
+    /**
+     * Methode static permettant de récuperer une partie de la base de donnée
+     * @async
+     * @param id - id de la game désiré
+     * @return {Promise<Game|boolean>} - Retourne un objet game, si aucune game avec l'id demandé n'existe, retourne false.
+     */
     static async getGameWithId( id ) {
         const dbConn = new MysqlConnection();
         const res    = await dbConn.query( `
@@ -106,6 +132,10 @@ class Game {
         } );
     }
 
+    /**
+     * Retourne la game sous forme d'objet JS, plus simple à transformer en JSON
+     * @return {{score: number, width, id: null, time: number, userId, board, status: string, height}}
+     */
     toObject() {
         return {
             id:     this._id,
