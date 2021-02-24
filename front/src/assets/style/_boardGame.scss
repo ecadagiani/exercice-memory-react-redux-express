@@ -1,0 +1,45 @@
+/*!
+ * Created in février 2021
+ * Written by Eden Cadagiani <e.cadagiani@gmail.com>
+ */
+.BoardGame__view {
+    .BoardGame__header {
+        display: flex;
+        justify-content: space-between;
+
+        .BoardGame__title {
+            font-family: 'Lobster', cursive;
+            margin-top: 20px;
+        }
+
+        .BoardGame__titleRight {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .BoardGame__time {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .BoardGame__buttonReset {
+            display: block;
+        }
+    }
+
+    .BoardGame__loader{
+        display: flex;
+        justify-content: center;
+    }
+
+    .BoardGame__error{
+        display: flex;
+        justify-content: center;
+    }
+
+    .BoardGame__cardContainer {
+        margin: 0 auto;
+        max-width: 800px;
+    }
+}

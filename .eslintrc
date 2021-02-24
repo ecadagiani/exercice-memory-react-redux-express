@@ -1,0 +1,48 @@
+{
+    "extends": [
+        "eslint:recommended",
+        "plugin:node/recommended"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 2020
+    },
+    "env": {
+        "node": true,
+        "es6": true
+    },
+    "rules": {
+        "no-console":"warn",
+        "quotes": [
+            "warn",
+            "double"
+        ],
+        "semi": [
+            "warn",
+            "always"
+        ],
+        "func-names": [
+            "error",
+            "never"
+        ],
+        "no-underscore-dangle": "off",
+        "indent": [
+            2,
+            4,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "max-len": [
+            1,
+            200,
+            4
+        ],
+        "linebreak-style": 0,
+        "no-trailing-spaces": "off",
+        "no-multiple-empty-lines": "off",
+        "consistent-return": "off",
+        "global-require": "off",
+        "no-param-reassign": "off",
+        "node/no-unpublished-require": "off"
+    }
+}
