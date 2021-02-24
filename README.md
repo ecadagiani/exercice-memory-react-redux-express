@@ -7,7 +7,9 @@ Avoir **npm**, **docker** et **docker-compose** d'installé.
 
 ### Mise en place - Test
 1. Copier coller le `.env.dist` en `.env`, modifier les valeurs au besoin (notamment les ports)
-2. `npm start`
+2. `npm run build`
+3. `npm start`
+4. Rendez-vous sur http://localhost:3000 (ou un autre port si vous avez changé FRONT_PORT)
 
 ### Mise en place - Dev
 1. Copier coller le `.env.dist` en `.env`, modifier les valeurs au besoin (notamment les ports).
