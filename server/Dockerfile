@@ -2,7 +2,7 @@ FROM node:10.10.0-slim
 
 WORKDIR /home/node/app
 
-RUN npm install -g nodemon
+RUN npm install -g nodemon npm-run-all sass
 
 ADD package.json /home/node/app/package.json
 

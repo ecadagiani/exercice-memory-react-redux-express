@@ -7,8 +7,10 @@ const bodyParser = require( "body-parser" );
 const cors       = require( "cors" );
 const helmet     = require( "helmet" );
 const http       = require( "http" );
+const path       = require( "path" );
 
 const gamesRouter = require( "http/router/GamesRouter" );
+const webRouter   = require( "http/router/WebRouter" );
 
 class HttpController {
     constructor() {
@@ -29,8 +31,16 @@ class HttpController {
         // Ajouter quelque simple sécurité de base
         this.app.use( helmet() );
 
+        // Mise en place du moteur de rendu
+        this.app.set( "view engine", "pug" );
+        this.app.set( "views", path.join( __dirname, "../views" ) );
+
+        // envoi des fichiers web static
+        this.app.use(express.static('src/static'));
+
         // Charge les routes lié à une partie
         this.app.use( "/game", gamesRouter );
+        this.app.use( "/web", webRouter );
 
         // Route de test
         this.app.get( "/ping", ( req, res ) => {

@@ -1,0 +1,93 @@
+@charset "UTF-8";
+/*!
+ * Created in février 2021
+ * Written by Eden Cadagiani <e.cadagiani@gmail.com>
+ */
+/*!
+ * Created in février 2021
+ * Written by Eden Cadagiani <e.cadagiani@gmail.com>
+ */
+.BoardGame__view .BoardGame__header {
+  display: flex;
+  justify-content: space-between;
+}
+.BoardGame__view .BoardGame__header .BoardGame__title {
+  font-family: "Lobster", cursive;
+  margin-top: 20px;
+}
+.BoardGame__view .BoardGame__header .BoardGame__titleRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.BoardGame__view .BoardGame__header .BoardGame__time {
+  text-align: left;
+  margin-top: 20px;
+}
+.BoardGame__view .BoardGame__header .BoardGame__buttonReset {
+  display: block;
+}
+.BoardGame__view .BoardGame__loader {
+  display: flex;
+  justify-content: center;
+}
+.BoardGame__view .BoardGame__error {
+  display: flex;
+  justify-content: center;
+}
+.BoardGame__view .BoardGame__cardContainer {
+  margin: 0 auto;
+  max-width: 800px;
+  display: grid;
+  grid-gap: 30px;
+}
+@media (max-width: 768px) {
+  .BoardGame__view .BoardGame__cardContainer {
+    grid-gap: 5px;
+  }
+}
+
+.TimeCounter {
+  font-family: "Lobster", cursive;
+  font-size: x-large;
+}
+
+body {
+  background-color: #5BD1D7;
+  font-family: "Roboto", sans-serif;
+}
+
+button.materialButton {
+  cursor: pointer;
+  vertical-align: middle;
+  text-decoration: none;
+  text-align: center;
+  letter-spacing: 0.5px;
+  border: none;
+  border-radius: 2px;
+  display: inline-block;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 16px;
+  text-transform: uppercase;
+  -webkit-tap-highlight-color: transparent;
+  transition: 0.3s ease-out;
+  color: #fff;
+  background-color: #348498;
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+button.materialButton:hover {
+  background-color: #3e9cb3;
+  -webkit-box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2);
+}
+button.materialButton:focus {
+  background-color: #2a6b7a;
+  outline: none;
+}
+button.materialButton:active {
+  outline: none;
+}
+
+/*# sourceMappingURL=style.css.map */

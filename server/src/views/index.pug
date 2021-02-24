@@ -1,0 +1,39 @@
+doctype html
+//
+  ~ Created in février 2021
+  ~ Written by Eden Cadagiani <e.cadagiani@gmail.com>
+head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+
+    link(rel='apple-touch-icon' sizes='180x180' href='./apple-touch-icon.png')
+    link(rel='icon' type='image/png' sizes='32x32' href='./favicon-32x32.png')
+    link(rel='icon' type='image/png' sizes='16x16' href='./favicon-16x16.png')
+    meta(name='msapplication-TileColor' content='#5BD1D7')
+    meta(name='theme-color' content='#ffffff')
+
+    link(rel='preconnect' href='https://fonts.gstatic.com')
+    link(href='https://fonts.googleapis.com/css2?family=Fira+Mono:wght@700&family=Lobster&family=Roboto:wght@300;400&display=swap' rel='stylesheet')
+    link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.css' integrity='sha256-IOK+l4ZTv3gsgXRB8x72XhfUPf5SjCzttu6BDdx+2vU=' crossorigin='anonymous')
+    link(rel='stylesheet' href='./style.css')
+
+    script(src='https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.all.min.js' integrity='sha256-92U7H+uBjYAJfmb+iNPi7DPoj795ZCTY4ZYmplsn/fQ=' crossorigin='anonymous')
+    script(src='https://code.jquery.com/jquery-3.5.1.slim.min.js' integrity='sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=' crossorigin='anonymous')
+
+    meta(name='description' content='Memory game on JS equality')
+    title Memory JS
+
+- var width = 7
+- var height = 4
+body
+    div(class='App')
+        div(class='BoardGame__view')
+            header(class='BoardGame__header')
+                h1(class='BoardGame__title')
+                    | Memory JS
+                div(class='BoardGame__titleRight')
+                    span(class='BoardGame__time TimeCounter' id='TimeCounter')
+                    button(class='materialButton BoardGame__buttonReset')
+                        | Recommencer
+        div(class='BoardGame__cardContainer' style=`grid-template-columns: repeat(${width}, 1fr); grid-template-rows: repeat(${height}, 1fr);`)
+

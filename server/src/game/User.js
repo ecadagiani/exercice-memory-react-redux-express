@@ -13,7 +13,7 @@ const MysqlConnection = require( "database/MysqlConnection" );
 class User {
     constructor( {
         id = null, name = "",
-    } ) {
+    } = {} ) {
         this._id   = id;
         this._name = name || uniqId( "user-" ); // Si name n'est pas préciser, créer un pseudo aléatoire et unique basé sur le timestamp
     }
