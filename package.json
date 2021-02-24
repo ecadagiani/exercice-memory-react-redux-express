@@ -25,9 +25,5 @@
     "eslint": "^7.20.0",
     "eslint-plugin-node": "^11.1.0"
   },
-  "homepage": "https://github.com/ecadagiani/Pyrite-oclock-memory#readme",
-  "dependencies": {
-    "@sweetalert2/theme-material-ui": "^4.0.3",
-    "sweetalert2": "^10.15.5"
-  }
+  "homepage": "https://github.com/ecadagiani/Pyrite-oclock-memory#readme"
 }
