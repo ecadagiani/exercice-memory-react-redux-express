@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Un site web, jeu de memory pour apprendre les égalités en JS",
   "scripts": {
+    "build": "docker-compose build",
     "start": "docker-compose up",
     "start:local": "docker-compose up -d server db adminer && cd front && npm run start",
     "startServer:local": "docker-compose up -d server db adminer && docker-compose logs -f",

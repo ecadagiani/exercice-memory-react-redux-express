@@ -37,7 +37,7 @@ services:
   front:
     build: ./front
     ports:
-      - "3000:80"
+      - "${FRONT_PORT}:80"
 
 
 volumes:
