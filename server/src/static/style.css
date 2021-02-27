@@ -52,6 +52,96 @@
   font-size: x-large;
 }
 
+/*!
+ * Created in février 2021
+ * Written by Eden Cadagiani <e.cadagiani@gmail.com>
+ */
+.Card {
+  font-family: "Lobster", cursive;
+  aspect-ratio: 1/1;
+  /******* INSIDE CARD *******/
+  /******** SHADOW *******/
+  /******** ANIMATION DE RETOURNEMENT *******/
+  position: relative;
+}
+.Card .Card__front, .Card .Card__back {
+  background: #fff;
+  border-radius: 5px;
+}
+.Card .Card__front {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Card .Card__back {
+  position: relative;
+}
+.Card .Card__back .Card__backImage {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+}
+.Card .Card__back .Card__text {
+  font-family: "Fira Mono", monospace;
+  font-weight: 700;
+  font-size: x-small;
+  position: absolute;
+  bottom: 10px;
+  text-align: center;
+  width: 100%;
+  left: 0;
+  overflow-wrap: break-word;
+}
+.Card.found .Card__back {
+  opacity: 0.5;
+}
+.Card .Card__flipper {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.Card:not(.found) .Card__flipper:hover {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+.Card.returned:not(.found) .Card__flipper {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+.Card.returned:not(.found) .Card__back {
+  border: 6px solid #FF502F;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+.Card.found .Card__flipper {
+  box-shadow: none;
+}
+.Card .Card__flipper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  transition: -webkit-transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), -webkit-transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.Card .Card__flipper .Card__front, .Card .Card__flipper .Card__back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.Card .Card__flipper .Card__back {
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+.Card .Card__flipper.flipped {
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+
 body {
   background-color: #5BD1D7;
   font-family: "Roboto", sans-serif;

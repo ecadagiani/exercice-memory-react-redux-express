@@ -3,6 +3,9 @@
         "eslint:recommended",
         "plugin:node/recommended"
     ],
+    "plugins": [
+        "jquery"
+    ],
     "parserOptions": {
         "ecmaVersion": 2020
     },

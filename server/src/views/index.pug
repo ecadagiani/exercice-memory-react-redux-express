@@ -7,8 +7,8 @@ head
     meta(name='viewport' content='width=device-width, initial-scale=1')
 
     link(rel='apple-touch-icon' sizes='180x180' href='./apple-touch-icon.png')
-    link(rel='icon' type='image/png' sizes='32x32' href='./favicon-32x32.png')
-    link(rel='icon' type='image/png' sizes='16x16' href='./favicon-16x16.png')
+    link(rel='icon' type='images/png' sizes='32x32' href='./favicon-32x32.png')
+    link(rel='icon' type='images/png' sizes='16x16' href='./favicon-16x16.png')
     meta(name='msapplication-TileColor' content='#5BD1D7')
     meta(name='theme-color' content='#ffffff')
 
@@ -23,8 +23,6 @@ head
     meta(name='description' content='Memory game on JS equality')
     title Memory JS
 
-- var width = 7
-- var height = 4
 body
     div(class='App')
         div(class='BoardGame__view')
@@ -35,5 +33,20 @@ body
                     span(class='BoardGame__time TimeCounter' id='TimeCounter')
                     button(class='materialButton BoardGame__buttonReset')
                         | Recommencer
-        div(class='BoardGame__cardContainer' style=`grid-template-columns: repeat(${width}, 1fr); grid-template-rows: repeat(${height}, 1fr);`)
+            div(class='BoardGame__cardContainer' style=`grid-template-columns: repeat(${width}, 1fr); grid-template-rows: repeat(${height}, 1fr);`)
+                each card, index in cardList
+                    div(id=index data-index=index data-identity=card.identity class='Card')
+                        div(class='Card__flipper')
+                            div(class='Card__front')
+                                span ?
+                            div(class='Card__back')
+                                img(src=`./images/${card.identity}.svg` alt=card.identity class='Card__backImage')
+                            span(class='Card__text')
+                                #{card.text}
+                                // todo escape char
 
+script.
+    window.pyrite = {};
+    window.pyrite.cardList=!{JSON.stringify(cardList)};
+
+script(src='./app.js' )

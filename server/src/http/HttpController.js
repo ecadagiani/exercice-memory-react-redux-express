@@ -29,7 +29,9 @@ class HttpController {
         // pour gérer les cross origin platform, ATTENTION: suffisant pour du local, mais à ne pas utiliser en prod https://developer.mozilla.org/fr/docs/Web/HTTP/CORS
         this.app.use( cors( { origin: "*" } ) );
         // Ajouter quelque simple sécurité de base
-        this.app.use( helmet() );
+        this.app.use( helmet({
+            contentSecurityPolicy: false // todo - update to use only wanted script
+        }) );
 
         // Mise en place du moteur de rendu
         this.app.set( "view engine", "pug" );

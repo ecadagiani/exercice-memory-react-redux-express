@@ -6,7 +6,7 @@
 /*
     Les différentes cartes qui seront affiché sur la page.
     Un simple tableau avec 1 carte par element.
-    le champs identity permet de reconnaitre les paires, et d'indiquer au front l'image a utiliser
+    le champs identity permet de reconnaitre les paires, et d'indiquer au front l'images a utiliser
     le champs texte servira pour l'affichage
  */
 const cards = [
