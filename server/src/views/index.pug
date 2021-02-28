@@ -19,6 +19,8 @@ head
 
     script(src='https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.all.min.js' integrity='sha256-92U7H+uBjYAJfmb+iNPi7DPoj795ZCTY4ZYmplsn/fQ=' crossorigin='anonymous')
     script(src='https://code.jquery.com/jquery-3.5.1.slim.min.js' integrity='sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=' crossorigin='anonymous')
+    script( src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js' integrity='sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==' crossorigin='anonymous')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js' integrity='sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==' crossorigin='anonymous')
 
     meta(name='description' content='Memory game on JS equality')
     title Memory JS
@@ -35,18 +37,21 @@ body
                         | Recommencer
             div(class='BoardGame__cardContainer' style=`grid-template-columns: repeat(${width}, 1fr); grid-template-rows: repeat(${height}, 1fr);`)
                 each card, index in cardList
-                    div(id=index data-index=index data-identity=card.identity class='Card')
+                    div(id=`card-${index}` data-index=index data-identity=card.identity class='Card')
                         div(class='Card__flipper')
                             div(class='Card__front')
                                 span ?
                             div(class='Card__back')
                                 img(src=`./images/${card.identity}.svg` alt=card.identity class='Card__backImage')
-                            span(class='Card__text')
-                                #{card.text}
-                                // todo escape char
+                                span(class='Card__text')
+                                    #{card.text}
+                                    // todo escape char
 
 script.
     window.pyrite = {};
-    window.pyrite.cardList=!{JSON.stringify(cardList)};
+    window.pyrite.cardList = !{JSON.stringify( cardList )};
+    window.pyrite.time = #{time};
+    window.pyrite.gameId = #{id};
+    const serverHost = "#{serverHost}";
 
 script(src='./app.js' )

@@ -13,6 +13,13 @@
         "node": true,
         "es6": true
     },
+    "globals": {
+        "_": true,
+        "$": true,
+        "window": true,
+        "axios": true,
+        "Swal": true
+    },
     "rules": {
         "no-console":"warn",
         "quotes": [

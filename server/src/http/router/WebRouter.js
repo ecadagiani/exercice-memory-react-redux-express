@@ -25,6 +25,7 @@ webRouter.get( "/", async function( req, res ) {
     res.render( "index", {
         ...game.toObject(),
         cardList: cardList,
+        serverHost: process.env.SERVER_HOST,
     } );
 } );
 
